@@ -5,20 +5,23 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.VBox;
 
 public class SettingsController implements Initializable {
-	
 
-	
+	// actions
+
+	private EventHandler<ActionEvent> onSaveChanges;
+	private EventHandler<ActionEvent> onBack;
+
 	@FXML
-    private VBox view;
+	private VBox view;
 
-    
-    public SettingsController() {
+	public SettingsController() {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SettingsView.fxml"));
 			loader.setController(this);
@@ -33,14 +36,27 @@ public class SettingsController implements Initializable {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	@FXML
 	void onSaveChangesAction(ActionEvent event) {
-		
+		onSaveChanges.handle(event);
 	}
-	
+
+	@FXML
+	void onBackToMenuAction(ActionEvent event) {
+		onBack.handle(event);
+	}
+
 	public VBox getView() {
 		return view;
+	}
+
+	public void setOnSaveChanges(EventHandler<ActionEvent> onSaveChanges) {
+		this.onSaveChanges = onSaveChanges;
+	}
+	
+	public void setOnBack(EventHandler<ActionEvent> onBack) {
+		this.onBack = onBack;
 	}
 
 }

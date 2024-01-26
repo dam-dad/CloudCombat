@@ -3,11 +3,15 @@ package dad.cloudcombat.ui;
 import java.io.IOException;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.VBox;
 
 public class GameController {
+	
+	private EventHandler<ActionEvent> onBack;
+
 	
 	@FXML
     private VBox view;
@@ -25,7 +29,7 @@ public class GameController {
 
     @FXML
     void onGoingBackToMenuAction(ActionEvent event) {
-    	
+    	onBack.handle(event);
     }
     
 	public static void main(String[] args) {
@@ -35,6 +39,10 @@ public class GameController {
 	
 	public VBox getView() {
 		return view;
+	}
+	
+	public void setOnBack(EventHandler<ActionEvent> onBack) {
+		this.onBack = onBack;
 	}
 
 }

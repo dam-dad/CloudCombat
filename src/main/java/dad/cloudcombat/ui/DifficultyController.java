@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,7 +13,8 @@ import javafx.scene.layout.VBox;
 
 public class DifficultyController implements Initializable {
 	
-	private GameController gameController = new GameController();
+	private EventHandler<ActionEvent> onEasyMode;
+
 	
 	@FXML
     private VBox view;
@@ -36,9 +38,7 @@ public class DifficultyController implements Initializable {
 	
 	@FXML
 	void onSelectEasyDifficultyAction(ActionEvent event) {
-		VBox gameView = gameController.getView();
-	    view.getChildren().clear();
-	    view.getChildren().add(gameView);
+		onEasyMode.handle(event);
 	}
 	
 	@FXML
@@ -48,6 +48,11 @@ public class DifficultyController implements Initializable {
 	
 	public VBox getView() {
 		return view;
+	}
+
+	public void setOnEasy(EventHandler<ActionEvent> onEasyMode) {
+		this.onEasyMode = onEasyMode;
+		
 	}
 
 }

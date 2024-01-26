@@ -8,10 +8,13 @@ import javafx.stage.Stage;
 public class App extends Application {
 	
 	MainController mainController;
+	
+	public static Stage stage;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
+		stage = primaryStage;
 		mainController = new MainController();
 		
 		primaryStage.setTitle("CloudCombat");
