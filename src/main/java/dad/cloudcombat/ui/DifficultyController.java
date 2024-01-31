@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import dad.cloudcombat.engine.Music;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -12,6 +13,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.VBox;
 
 public class DifficultyController implements Initializable {
+	
+	
+	private Music backgroundMusic;
+	
 	
 	private EventHandler<ActionEvent> onEasyMode;
 
@@ -32,7 +37,15 @@ public class DifficultyController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
+		backgroundMusic = new Music("/music/MenuSong.mp3");
+
+        view.sceneProperty().addListener((o, ov, nv) -> {
+        	if (nv != null) {
+        		backgroundMusic.play();       		
+        	} else {
+        		backgroundMusic.stop();
+        	}
+        });
 
 	}
 	

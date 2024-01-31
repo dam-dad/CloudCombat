@@ -1,14 +1,20 @@
 package dad.cloudcombat.ui;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
+import dad.cloudcombat.engine.Music;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.layout.VBox;
 
-public class GameController {
+public class GameController implements Initializable{
+	
+	private Music backgroundMusic;
 	
 	private EventHandler<ActionEvent> onBack;
 
@@ -43,6 +49,20 @@ public class GameController {
 	
 	public void setOnBack(EventHandler<ActionEvent> onBack) {
 		this.onBack = onBack;
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		backgroundMusic = new Music("/music/GameSong3.mp3");
+
+        view.sceneProperty().addListener((o, ov, nv) -> {
+        	if (nv != null) {
+        		backgroundMusic.play();       		
+        	} else {
+        		backgroundMusic.stop();
+        	}
+        });
+		
 	}
 
 }

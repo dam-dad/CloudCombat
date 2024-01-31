@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXToggleButton;
 
+import dad.cloudcombat.engine.Music;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,37 +18,39 @@ import javafx.scene.layout.VBox;
 
 public class SettingsController implements Initializable {
 
+	private Music backgroundMusic;
+
 	// actions
 
 	private EventHandler<ActionEvent> onSaveChanges;
 	private EventHandler<ActionEvent> onBack;
 
-	 @FXML
-	    private Slider fxSlider;
+	@FXML
+	private Slider fxSlider;
 
-	    @FXML
-	    private JFXToggleButton fxToggle;
+	@FXML
+	private JFXToggleButton fxToggle;
 
-	    @FXML
-	    private Slider generalSlider;
+	@FXML
+	private Slider generalSlider;
 
-	    @FXML
-	    private JFXToggleButton generalToggle;
+	@FXML
+	private JFXToggleButton generalToggle;
 
-	    @FXML
-	    private ComboBox<?> songCombo;
+	@FXML
+	private ComboBox<?> songCombo;
 
-	    @FXML
-	    private Slider songSlider;
+	@FXML
+	private Slider songSlider;
 
-	    @FXML
-	    private JFXToggleButton songToggle;
+	@FXML
+	private JFXToggleButton songToggle;
 
-	    @FXML
-	    private ComboBox<?> themeCombo;
+	@FXML
+	private ComboBox<?> themeCombo;
 
-	    @FXML
-	    private VBox view;
+	@FXML
+	private VBox view;
 
 	public SettingsController() {
 		try {
@@ -61,7 +64,15 @@ public class SettingsController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
+		backgroundMusic = new Music("/music/MenuSong.mp3");
+
+		view.sceneProperty().addListener((o, ov, nv) -> {
+			if (nv != null) {
+				backgroundMusic.play();
+			} else {
+				backgroundMusic.stop();
+			}
+		});
 
 	}
 
@@ -82,7 +93,7 @@ public class SettingsController implements Initializable {
 	public void setOnSaveChanges(EventHandler<ActionEvent> onSaveChanges) {
 		this.onSaveChanges = onSaveChanges;
 	}
-	
+
 	public void setOnBack(EventHandler<ActionEvent> onBack) {
 		this.onBack = onBack;
 	}
