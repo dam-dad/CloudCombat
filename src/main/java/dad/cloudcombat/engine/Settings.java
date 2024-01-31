@@ -1,5 +1,5 @@
 package dad.cloudcombat.engine;
 
-public class Jugador {
+public class Settings {
 
 }

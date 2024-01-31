@@ -1,5 +1,5 @@
 package dad.cloudcombat.engine;
 
-public class Configuracion {
+public class Board {
 
 }

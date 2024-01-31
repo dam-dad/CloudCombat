@@ -1,5 +1,5 @@
 package dad.cloudcombat.engine;
 
-public class Dificultad {
+public class Player {
 
 }
