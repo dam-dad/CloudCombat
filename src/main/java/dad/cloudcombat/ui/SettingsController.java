@@ -4,11 +4,15 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXToggleButton;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
 
 public class SettingsController implements Initializable {
@@ -18,8 +22,32 @@ public class SettingsController implements Initializable {
 	private EventHandler<ActionEvent> onSaveChanges;
 	private EventHandler<ActionEvent> onBack;
 
-	@FXML
-	private VBox view;
+	 @FXML
+	    private Slider fxSlider;
+
+	    @FXML
+	    private JFXToggleButton fxToggle;
+
+	    @FXML
+	    private Slider generalSlider;
+
+	    @FXML
+	    private JFXToggleButton generalToggle;
+
+	    @FXML
+	    private ComboBox<?> songCombo;
+
+	    @FXML
+	    private Slider songSlider;
+
+	    @FXML
+	    private JFXToggleButton songToggle;
+
+	    @FXML
+	    private ComboBox<?> themeCombo;
+
+	    @FXML
+	    private VBox view;
 
 	public SettingsController() {
 		try {
