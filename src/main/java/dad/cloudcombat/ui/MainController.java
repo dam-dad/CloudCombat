@@ -5,12 +5,16 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import dad.cloudcombat.App;
+import dad.cloudcombat.engine.Music;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.BorderPane;
 
 public class MainController implements Initializable {
+	
+	private Music menuMusic = new Music("/music/MenuSong.mp3");
+	private Music gameMusic = new Music("/music/GameSong3.mp3");
 	
 	//controllers
 	
@@ -34,13 +38,14 @@ public class MainController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+				
 		menuController = new  MenuController();
-		settingsController = new SettingsController();
+		settingsController = new SettingsController(menuMusic, gameMusic);
 		difficultyController = new DifficultyController();
 		gameController = new GameController();
 		
 		view.setCenter(menuController.getView());
+		menuMusic.play();
 		
 		
 		menuController.setOnStartGame(e -> {
@@ -66,10 +71,15 @@ public class MainController implements Initializable {
 		
 		difficultyController.setOnEasy(e -> {
 			view.setCenter(gameController.getView());
+			menuMusic.stop();
+			gameMusic.play();
+			
 		});
 		
 		gameController.setOnBack(e -> {
 			view.setCenter(menuController.getView());
+			gameMusic.stop();
+			menuMusic.play();
 		});
 		
 	}

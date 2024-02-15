@@ -42,11 +42,11 @@
             <Label text="High" GridPane.columnIndex="4" />
             <Label text="Song" GridPane.rowIndex="1" />
             <Label text="Low" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Slider fx:id="songSlider" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Slider fx:id="songSlider" GridPane.columnIndex="3" GridPane.rowIndex="1" majorTickUnit="10.0" max="10.0" minorTickCount="10" showTickMarks="true" />
             <Label text="High" GridPane.columnIndex="4" GridPane.rowIndex="1" />
             <Label text="FX" GridPane.rowIndex="2" />
             <Label text="Low" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <Slider fx:id="fxSlider" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Slider fx:id="fxSlider" GridPane.columnIndex="3" GridPane.rowIndex="2" majorTickUnit="10.0" max="10.0" minorTickCount="10" showTickMarks="true"/>
             <Label text="High" GridPane.columnIndex="4" GridPane.rowIndex="2" />
             <JFXToggleButton fx:id="generalToggle" text=" " GridPane.columnIndex="1" />
             <JFXToggleButton fx:id="songToggle" text=" " GridPane.columnIndex="1" GridPane.rowIndex="1" />

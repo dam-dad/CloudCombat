@@ -11,6 +11,7 @@ public class Music {
         Media sound = new Media(getClass().getResource(musicFile).toString());
         mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
+        
     }
 
     public void play() {

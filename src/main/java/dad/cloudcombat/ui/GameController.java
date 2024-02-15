@@ -53,7 +53,7 @@ public class GameController implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		backgroundMusic = new Music("/music/GameSong3.mp3");
+		/*backgroundMusic = new Music("/music/GameSong3.mp3");
 
         view.sceneProperty().addListener((o, ov, nv) -> {
         	if (nv != null) {
@@ -61,7 +61,7 @@ public class GameController implements Initializable{
         	} else {
         		backgroundMusic.stop();
         	}
-        });
+        });*/
 		
 	}
 

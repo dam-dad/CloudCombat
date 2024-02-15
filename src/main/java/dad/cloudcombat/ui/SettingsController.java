@@ -18,7 +18,8 @@ import javafx.scene.layout.VBox;
 
 public class SettingsController implements Initializable {
 
-	private Music backgroundMusic;
+	private Music menuMusic;
+	private Music gameMusic;
 
 	// actions
 
@@ -52,7 +53,10 @@ public class SettingsController implements Initializable {
 	@FXML
 	private VBox view;
 
-	public SettingsController() {
+	public SettingsController(Music menuMusic, Music gameMusic) {
+
+		this.menuMusic = menuMusic;
+		this.gameMusic = gameMusic;
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SettingsView.fxml"));
 			loader.setController(this);
@@ -64,15 +68,24 @@ public class SettingsController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		backgroundMusic = new Music("/music/MenuSong.mp3");
 
-		view.sceneProperty().addListener((o, ov, nv) -> {
-			if (nv != null) {
-				backgroundMusic.play();
-			} else {
-				backgroundMusic.stop();
-			}
+		// SLIDER MUSICA
+		songSlider.setValue(menuMusic.getVolume());
+		songSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+			menuMusic.setVolume(newValue.doubleValue());
+			gameMusic.setVolume(newValue.doubleValue());
 		});
+
+		generalSlider.valueProperty().bindBidirectional(songSlider.valueProperty());
+
+		generalSlider.setValue(5);
+
+		/*
+		 * backgroundMusic = new Music("/music/MenuSong.mp3");
+		 * 
+		 * view.sceneProperty().addListener((o, ov, nv) -> { if (nv != null) {
+		 * backgroundMusic.play(); } else { backgroundMusic.stop(); } });
+		 */
 
 	}
 

@@ -37,7 +37,7 @@ public class DifficultyController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		backgroundMusic = new Music("/music/MenuSong.mp3");
+	/*	backgroundMusic = new Music("/music/MenuSong.mp3");
 
         view.sceneProperty().addListener((o, ov, nv) -> {
         	if (nv != null) {
@@ -45,7 +45,7 @@ public class DifficultyController implements Initializable {
         	} else {
         		backgroundMusic.stop();
         	}
-        });
+        });*/
 
 	}
 	
