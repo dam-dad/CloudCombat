@@ -6,6 +6,7 @@ import javafx.util.Duration;
 
 public class Music {
 	private MediaPlayer mediaPlayer;
+	 private boolean playOnSelect;
 
     public Music(String musicFile) {
         Media sound = new Media(getClass().getResource(musicFile).toString());
@@ -37,4 +38,23 @@ public class Music {
     public boolean isPlaying() {
         return mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING;
     }
+    
+    public void changeSong(String musicFile) {
+        mediaPlayer.stop();
+        mediaPlayer = new MediaPlayer(new Media(getClass().getResource(musicFile).toString()));
+        mediaPlayer.setOnEndOfMedia(() -> {
+            if (playOnSelect) {
+                mediaPlayer.seek(Duration.ZERO);
+                mediaPlayer.play();
+            }
+        });
+        if (playOnSelect) {
+            mediaPlayer.play();
+        }
+    }
+
+    public void setPlayOnSelect(boolean playOnSelect) {
+        this.playOnSelect = playOnSelect;
+    }
+    
 }

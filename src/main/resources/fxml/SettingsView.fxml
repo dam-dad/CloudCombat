@@ -103,7 +103,7 @@
       <HBox alignment="CENTER" spacing="10.0">
          <children>
             <Button mnemonicParsing="false" onAction="#onSaveChangesAction" prefWidth="110.0" text="Save Changes" />
-            <Button mnemonicParsing="false" onAction="#onBackToMenuAction" prefWidth="110.0" text="Go Back to Menu" />
+            <Button mnemonicParsing="false" onAction="#onBackToMenuAction" prefWidth="110.0" text="Restore Default" />
          </children>
          <padding>
             <Insets bottom="10.0" />

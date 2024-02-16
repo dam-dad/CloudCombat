@@ -77,10 +77,11 @@ public class MainController implements Initializable {
 		});
 		
 		gameController.setOnBack(e -> {
-			view.setCenter(menuController.getView());
-			gameMusic.stop();
-			menuMusic.play();
-		});
+            view.setCenter(menuController.getView());
+            gameMusic.stop();
+            menuMusic.play();
+            gameMusic.setPlayOnSelect(false); 
+        });
 		
 	}
 	

@@ -39,7 +39,7 @@ public class SettingsController implements Initializable {
 	private JFXToggleButton generalToggle;
 
 	@FXML
-	private ComboBox<?> songCombo;
+	private ComboBox<String> songCombo;
 
 	@FXML
 	private Slider songSlider;
@@ -69,6 +69,26 @@ public class SettingsController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
+		//COMBO BOX 
+		songCombo.getItems().addAll("Canción 1", "Canción 2", "Canción 3");
+		songCombo.setValue("Canción 3");
+
+		songCombo.setOnAction(e -> {
+			String selectedSong = songCombo.getSelectionModel().getSelectedItem();
+			switch (selectedSong) {
+			case "Canción 1":
+				gameMusic.changeSong("/music/GameSong1.mp3");
+				break;
+			case "Canción 2":
+				gameMusic.changeSong("/music/GameSong2.mp3");
+				break;
+			case "Canción 3":
+				gameMusic.changeSong("/music/GameSong3.mp3");
+				break;
+			}
+			gameMusic.setPlayOnSelect(true);
+		});
+
 		// SLIDER MUSICA
 		songSlider.setValue(menuMusic.getVolume());
 		songSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -80,12 +100,55 @@ public class SettingsController implements Initializable {
 
 		generalSlider.setValue(5);
 
-		/*
-		 * backgroundMusic = new Music("/music/MenuSong.mp3");
-		 * 
-		 * view.sceneProperty().addListener((o, ov, nv) -> { if (nv != null) {
-		 * backgroundMusic.play(); } else { backgroundMusic.stop(); } });
-		 */
+		// VINCULANDO TOGGLES A LOS SLIDERS
+		fxSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue.doubleValue() == fxSlider.getMin()) {
+				fxToggle.setSelected(false);
+			} else {
+				fxToggle.setSelected(true);
+			}
+		});
+
+		generalSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue.doubleValue() == generalSlider.getMin()) {
+				generalToggle.setSelected(false);
+			} else {
+				generalToggle.setSelected(true);
+			}
+		});
+
+		songSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue.doubleValue() == songSlider.getMin()) {
+				songToggle.setSelected(false);
+			} else {
+				songToggle.setSelected(true);
+			}
+		});
+
+		fxToggle.selectedProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue) {
+				fxSlider.setValue(fxSlider.getMax());
+			} else {
+				fxSlider.setValue(fxSlider.getMin());
+			}
+		});
+
+		generalToggle.selectedProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue) {
+				generalSlider.setValue(generalSlider.getMax());
+			} else {
+				generalSlider.setValue(generalSlider.getMin());
+			}
+		});
+
+		songToggle.selectedProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue) {
+				songSlider.setValue(songSlider.getMax());
+			} else {
+				songSlider.setValue(songSlider.getMin());
+
+			}
+		});
 
 	}
 
@@ -96,6 +159,11 @@ public class SettingsController implements Initializable {
 
 	@FXML
 	void onBackToMenuAction(ActionEvent event) {
+		fxSlider.setValue(5);
+		generalSlider.setValue(5);
+		songSlider.setValue(5);
+		gameMusic.changeSong("/music/GameSong3.mp3");
+
 		onBack.handle(event);
 	}
 
