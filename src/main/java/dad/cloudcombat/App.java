@@ -13,14 +13,19 @@ public class App extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		
-		stage = primaryStage;
-		mainController = new MainController();
-		
-		primaryStage.setTitle("CloudCombat");
-		primaryStage.setScene(new Scene(mainController.getView()));
-		primaryStage.show();
+	    stage = primaryStage;
+	    mainController = new MainController();
+	    
+	    //Font.loadFont(getClass().getResourceAsStream("/assets/PressStart2P-Regular.ttf"), 12);
 
+	    primaryStage.setTitle("CloudCombat");
+
+	    
+	    Scene scene = new Scene(mainController.getView());
+	    scene.getStylesheets().add(getClass().getResource("/css/Game.css").toExternalForm());
+
+	    primaryStage.setScene(scene);
+	    primaryStage.show();
 	}
 
 }
