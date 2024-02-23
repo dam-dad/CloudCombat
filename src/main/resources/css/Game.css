@@ -7,13 +7,14 @@
     -fx-font-family: "/assets/PressStart2P-Regular.ttf";
 }
 
-#titulo{
-	-fx-font-family: "/assets/PressStart2P-Regular.ttf";
-	-fx-font-size: 51px;
-}
-
 .button{
 	 -fx-background-color: transparent;
+}
+
+
+#titulo{
+	-fx-font-family: "/assets/PressStart2P-Regular.ttf";
+	-fx-font-size: 51.0px;
 }
 
 #backButton {
