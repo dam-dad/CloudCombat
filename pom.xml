@@ -41,4 +41,33 @@
 			<version>9.0.10</version>
 		</dependency>
 	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>io.github.fvarrui</groupId>
+				<artifactId>javapackager</artifactId>
+				<version>1.6.3</version>
+				<configuration>
+					<mainClass>dad.cloudcombat.Main</mainClass>
+					<bundleJre>true</bundleJre>
+					<generateInstaller>true</generateInstaller>
+					<customizedJre>false</customizedJre>
+				</configuration>
+				<executions>
+					<execution>
+						<id>windows-installer</id>
+						<phase>package</phase>
+						<goals>
+							<goal>package</goal>
+						</goals>
+						<configuration>
+							<platform>windows</platform>
+							<createZipball>true</createZipball>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
