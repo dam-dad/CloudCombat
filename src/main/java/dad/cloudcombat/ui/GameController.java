@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import dad.cloudcombat.engine.Score;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,16 +17,17 @@ import javafx.scene.layout.StackPane;
 
 public class GameController implements Initializable {
 
+	private Score score;
 	private EventHandler<ActionEvent> onBack;
 
 	@FXML
 	private StackPane view;
 
 	@FXML
-	private TableColumn<?, ?> playerColumn;
+	private TableColumn<Score.ScoreEntry, String> playerColumn;
 
 	@FXML
-	private TableColumn<?, ?> rankColumn;
+	private TableColumn<Score.ScoreEntry, Integer> rankColumn;
 
 	@FXML
 	private TableColumn<?, ?> scoreColumn;
@@ -34,7 +36,7 @@ public class GameController implements Initializable {
 	private BorderPane view2;
 
 	@FXML
-	private TableView<?> scoreTable;
+	private TableView<Score.ScoreEntry> scoreTable;
 
 	public GameController() {
 		try {
