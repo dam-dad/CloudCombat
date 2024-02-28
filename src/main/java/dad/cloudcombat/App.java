@@ -26,7 +26,7 @@ public class App extends Application {
 
 	    
 	    Scene scene = new Scene(mainController.getView());
-	  //  scene.getStylesheets().add(getClass().getResource("/css/Game.css").toExternalForm());
+	   scene.getStylesheets().add(getClass().getResource("/css/Game.css").toExternalForm());
 
 	    primaryStage.setScene(scene);
 	    primaryStage.setResizable(false);

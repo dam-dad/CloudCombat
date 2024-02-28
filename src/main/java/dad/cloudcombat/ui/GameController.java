@@ -9,14 +9,32 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 
 public class GameController implements Initializable {
 
 	private EventHandler<ActionEvent> onBack;
 
 	@FXML
-	private VBox view;
+	private StackPane view;
+
+	@FXML
+	private TableColumn<?, ?> playerColumn;
+
+	@FXML
+	private TableColumn<?, ?> rankColumn;
+
+	@FXML
+	private TableColumn<?, ?> scoreColumn;
+
+	@FXML
+	private BorderPane view2;
+
+	@FXML
+	private TableView<?> scoreTable;
 
 	public GameController() {
 		try {
@@ -33,12 +51,7 @@ public class GameController implements Initializable {
 		onBack.handle(event);
 	}
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public VBox getView() {
+	public StackPane getView() {
 		return view;
 	}
 
@@ -49,6 +62,16 @@ public class GameController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
+	}
+
+	@FXML
+	void onAceptar(ActionEvent event) {
+		view2.setVisible(false);
+	}
+
+	@FXML
+	void onShowScores(ActionEvent event) {
+		view2.setVisible(true);
 	}
 
 }
