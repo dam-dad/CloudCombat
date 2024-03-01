@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
@@ -84,54 +85,61 @@ public class GameController implements Initializable {
 	}
 
 	private void asignarImagenAleatoriaPlayer() {
+	    List<Integer> indices = new ArrayList<>();
+	    for (int i = 0; i < 100; i++) {
+	        indices.add(i);
+	    }
+	    Collections.shuffle(indices);
 
-		 List<Integer> indices = new ArrayList<>();
-		    for (int i = 0; i < 100; i++) {
-		        indices.add(i);
-		    }
-		    Collections.shuffle(indices);
+	    for (int i = 0; i < 12; i++) {
+	        int indiceBoton = indices.get(i);
 
-		    for (int i = 0; i < 12; i++) {
-		        int indiceBoton = indices.get(i);
+	        Random random = new Random();
+	        Image imagenAleatoria = imageListPlayer.get(random.nextInt(imageListPlayer.size()));
 
-		        Random random = new Random();
-		        Image imagenAleatoria = imageListPlayer.get(random.nextInt(imageListPlayer.size()));
+	        ImageView imageView = new ImageView(imagenAleatoria);
+	        imageView.setFitWidth(32);
+	        imageView.setFitHeight(32);
 
-		        ImageView imageView = new ImageView(imagenAleatoria);
-		        imageView.setFitWidth(32);
-		        imageView.setFitHeight(32);
+	        String buttonId = "buttonPlayer" + String.format("%02d", indiceBoton);
+	        Button button = (Button) view.lookup("#" + buttonId);
 
-		        String buttonId = "buttonPlayer" + String.format("%02d", indiceBoton);
-		        Button button = (Button) view.lookup("#" + buttonId);
+	        // Establecer el tamaño del botón
+	        button.setMinSize(32, 32);
+	        button.setMaxSize(32, 32);
 
-		        button.setGraphic(imageView);
-		    }
+	        button.setGraphic(imageView);
+	    }
 	}
 
 	private void asignarImagenAleatoriaIA() {
+	    List<Integer> indices = new ArrayList<>();
+	    for (int i = 0; i < 100; i++) {
+	        indices.add(i);
+	    }
+	    Collections.shuffle(indices);
 
-		 List<Integer> indices = new ArrayList<>();
-		    for (int i = 0; i < 100; i++) {
-		        indices.add(i);
-		    }
-		    Collections.shuffle(indices);
+	    for (int i = 12; i < 24; i++) {
+	        int indiceBoton = indices.get(i);
 
-		    for (int i = 12; i < 24; i++) {
-		        int indiceBoton = indices.get(i);
+	        Random random = new Random();
+	        Image imagenAleatoria = imageListIA.get(random.nextInt(imageListIA.size()));
 
-		        Random random = new Random();
-		        Image imagenAleatoria = imageListIA.get(random.nextInt(imageListIA.size()));
+	        ImageView imageView = new ImageView(imagenAleatoria);
+	        imageView.setFitWidth(32);
+	        imageView.setFitHeight(32);
 
-		        ImageView imageView = new ImageView(imagenAleatoria);
-		        imageView.setFitWidth(32);
-		        imageView.setFitHeight(32);
+	        String buttonId = "buttonIA" + String.format("%02d", indiceBoton);
+	        Button button = (Button) view.lookup("#" + buttonId);
 
-		        String buttonId = "buttonIA" + String.format("%02d", indiceBoton);
-		        Button button = (Button) view.lookup("#" + buttonId);
+	        // Establecer el tamaño del botón
+	        button.setMinSize(32, 32);
+	        button.setMaxSize(32, 32);
 
-		        button.setGraphic(imageView);
-		    }
+	        button.setGraphic(imageView);
+	    }
 	}
+
 	private void cargarImagenes() {
 
 		imageListPlayer = new ArrayList<>();
