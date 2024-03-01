@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="view" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="5.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="view" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="5.0" styleClass="..\css\CloudCombat.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label text="Select Difficulty">
+      <Label styleClass="titulos" text="SELECT DIFFICULTY">
          <font>
             <Font size="51.0" />
          </font>
@@ -16,7 +16,7 @@
             <Insets bottom="50.0" />
          </padding>
       </Label>
-      <Button mnemonicParsing="false" onAction="#onSelectEasyDifficultyAction" text="Easy" />
-      <Button mnemonicParsing="false" onAction="#onSelectStandardDifficultyAction" text="Standard" />
+      <Button mnemonicParsing="false" onAction="#onSelectEasyDifficultyAction" styleClass="botones" text="EASY" />
+      <Button mnemonicParsing="false" onAction="#onSelectStandardDifficultyAction" styleClass="botones" text="STANDARD" />
    </children>
 </VBox>

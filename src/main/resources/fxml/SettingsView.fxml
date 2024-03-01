@@ -13,9 +13,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="view" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="view" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="..\css\CloudCombat.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label text="Music">
+      <Label styleClass="titulos2" text="MUSIC">
          <font>
             <Font size="30.0" />
          </font>
@@ -36,18 +36,18 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="General" />
-            <Label text="Low" GridPane.columnIndex="2" />
+            <Label styleClass="texto" text="GENERAL" />
+            <Label styleClass="texto" text="LOW" GridPane.columnIndex="2" />
             <Slider fx:id="generalSlider" majorTickUnit="10.0" max="10.0" minorTickCount="10" showTickMarks="true" GridPane.columnIndex="3" />
-            <Label text="High" GridPane.columnIndex="4" />
-            <Label text="Song" GridPane.rowIndex="1" />
-            <Label text="Low" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Slider fx:id="songSlider" GridPane.columnIndex="3" GridPane.rowIndex="1" majorTickUnit="10.0" max="10.0" minorTickCount="10" showTickMarks="true" />
-            <Label text="High" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-            <Label text="FX" GridPane.rowIndex="2" />
-            <Label text="Low" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <Slider fx:id="fxSlider" GridPane.columnIndex="3" GridPane.rowIndex="2" majorTickUnit="10.0" max="10.0" minorTickCount="10" showTickMarks="true"/>
-            <Label text="High" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+            <Label styleClass="texto" text="HIGH" GridPane.columnIndex="4" />
+            <Label styleClass="texto" text="SONG" GridPane.rowIndex="1" />
+            <Label styleClass="texto" text="LOW" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Slider fx:id="songSlider" majorTickUnit="10.0" max="10.0" minorTickCount="10" showTickMarks="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Label styleClass="texto" text="HIGH" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+            <Label styleClass="texto" text="FX" GridPane.rowIndex="2" />
+            <Label styleClass="texto" text="LOW" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Slider fx:id="fxSlider" majorTickUnit="10.0" max="10.0" minorTickCount="10" showTickMarks="true" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Label styleClass="texto" text="HIGH" GridPane.columnIndex="4" GridPane.rowIndex="2" />
             <JFXToggleButton fx:id="generalToggle" text=" " GridPane.columnIndex="1" />
             <JFXToggleButton fx:id="songToggle" text=" " GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <JFXToggleButton fx:id="fxToggle" text=" " GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -70,11 +70,11 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Song choice" />
-            <ComboBox fx:id="songCombo" prefWidth="150.0" GridPane.columnIndex="1" />
+            <Label styleClass="texto" text="SONG CHOICE" />
+            <ComboBox fx:id="songCombo" prefWidth="150.0" styleClass="texto" GridPane.columnIndex="1" />
          </children>
       </GridPane>
-      <Label text="Theme">
+      <Label styleClass="titulos2" text="THEME">
          <font>
             <Font size="30.0" />
          </font>
@@ -93,8 +93,8 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Label text="Theme choice" />
-            <ComboBox fx:id="themeCombo" prefWidth="150.0" GridPane.columnIndex="1" />
+            <Label styleClass="texto" text="THEME CHOICE" />
+            <ComboBox fx:id="themeCombo" prefWidth="150.0" styleClass="texto" GridPane.columnIndex="1" />
          </children>
          <VBox.margin>
             <Insets bottom="25.0" />
@@ -102,8 +102,8 @@
       </GridPane>
       <HBox alignment="CENTER" spacing="10.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#onSaveChangesAction" prefWidth="110.0" text="Save Changes" />
-            <Button mnemonicParsing="false" onAction="#onBackToMenuAction" prefWidth="110.0" text="Restore Default" />
+            <Button mnemonicParsing="false" onAction="#onSaveChangesAction" prefWidth="200.0" styleClass="botones" text="SAVE CHANGES" />
+            <Button mnemonicParsing="false" onAction="#onBackToMenuAction" prefWidth="200.0" styleClass="botones" text="RESTORE DEFAULT" />
          </children>
          <padding>
             <Insets bottom="10.0" />

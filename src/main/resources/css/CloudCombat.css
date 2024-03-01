@@ -1,0 +1,37 @@
+#view{
+	-fx-background-image: url("/image/fondo.gif");
+	-fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+ 
+}
+
+.button{
+	 -fx-background-color: transparent;
+}
+
+.botones{
+-fx-font-family: Consolas;
+ -fx-font-weight: bold;
+ -fx-font-size: 15px;
+}
+
+
+.titulos{
+-fx-font-family: Consolas;
+}
+
+.titulos2{
+-fx-font-family: Consolas;
+}
+
+.texto{
+	-fx-font-family: Consolas;
+	-fx-font-size: 13px;
+}
+
+.texto2{
+	-fx-font-family: Consolas;
+	-fx-font-size: 18px;
+	 -fx-font-weight: bold;
+}

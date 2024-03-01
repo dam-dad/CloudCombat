@@ -124,6 +124,10 @@ public class SettingsController implements Initializable {
 				songToggle.setSelected(true);
 			}
 		});
+		
+		fxToggle.setSelected(true);
+		generalToggle.setSelected(true);
+		songToggle.setSelected(true);
 
 		fxToggle.selectedProperty().addListener((observable, oldValue, newValue) -> {
 			if (newValue) {

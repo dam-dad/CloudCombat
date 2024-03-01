@@ -6,10 +6,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox fx:id="view" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="5.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="view" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="5.0" styleClass="boton" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label text="Cloud Combat">
+      <Label styleClass="titulos" text="CLOUD COMBAT">
          <font>
             <Font size="51.0" />
          </font>
@@ -17,8 +16,8 @@
             <Insets bottom="50.0" />
          </padding>
       </Label>
-      <Button mnemonicParsing="false" onAction="#onStartGameAction" text="Start Game" />
-      <Button mnemonicParsing="false" onAction="#onSettingsAction" text="Settings" />
-      <Button mnemonicParsing="false" onAction="#onExitAction" text="Exit" />
+      <Button mnemonicParsing="false" onAction="#onStartGameAction" styleClass="botones" text="START GAME" />
+      <Button mnemonicParsing="false" onAction="#onSettingsAction" styleClass="botones" text="SETTINGS" />
+      <Button mnemonicParsing="false" onAction="#onExitAction" styleClass="botones" text="EXIT" />
    </children>
 </VBox>

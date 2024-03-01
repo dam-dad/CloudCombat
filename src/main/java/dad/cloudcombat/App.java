@@ -7,30 +7,30 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class App extends Application {
-	
+
 	MainController mainController;
-	
+
 	public static Stage stage;
 
 	/**
 	 * @
-	 * */
+	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-	    stage = primaryStage;
-	    mainController = new MainController();
-	    
-	    //Font.loadFont(getClass().getResourceAsStream("/assets/PressStart2P-Regular.ttf"), 12);
+		stage = primaryStage;
+		mainController = new MainController();
 
-	    primaryStage.setTitle("CloudCombat");
+		// Font.loadFont(getClass().getResourceAsStream("/assets/PressStart2P-Regular.ttf"),
+		// 12);
 
-	    
-	    Scene scene = new Scene(mainController.getView());
-	   scene.getStylesheets().add(getClass().getResource("/css/Game.css").toExternalForm());
+		primaryStage.setTitle("CloudCombat");
 
-	    primaryStage.setScene(scene);
-	    primaryStage.setResizable(false);
-	    primaryStage.show();
+		Scene scene = new Scene(mainController.getView());
+		scene.getStylesheets().add(getClass().getResource("/css/CloudCombat.css").toExternalForm());
+
+		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
+		primaryStage.show();
 	}
 
 }
