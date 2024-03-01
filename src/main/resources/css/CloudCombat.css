@@ -8,12 +8,15 @@
 
 .button{
 	 -fx-background-color: transparent;
+	 -fx-background-radius: 0.0;
+    -fx-focus-traversable: false;
+
 }
 
 .botones{
 -fx-font-family: Consolas;
  -fx-font-weight: bold;
- -fx-font-size: 15px;
+ -fx-font-size: 15.0px;
 }
 
 
@@ -27,11 +30,23 @@
 
 .texto{
 	-fx-font-family: Consolas;
-	-fx-font-size: 13px;
+	-fx-font-size: 13.0px;
 }
 
 .texto2{
 	-fx-font-family: Consolas;
-	-fx-font-size: 18px;
+	-fx-font-size: 18.0px;
 	 -fx-font-weight: bold;
+}
+
+#playerGrid {
+    -fx-border-color: blue;
+    -fx-border-width: 1.0px;
+    -fx-border-style: solid;
+}
+
+#iaGrid {
+    -fx-border-color: blue;
+    -fx-border-width: 1.0px;
+    -fx-border-style: solid;
 }

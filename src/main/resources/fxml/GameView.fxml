@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="view" styleClass="..\css\CloudCombat.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="view" styleClass="..\css\CloudCombat.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
          <children>
@@ -32,7 +32,7 @@
             </HBox>
             <HBox alignment="CENTER" spacing="40.0">
                <children>
-                  <GridPane fx:id="playerGrid" gridLinesVisible="true">
+                  <GridPane fx:id="playerGrid">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="25.0" prefWidth="25.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="25.0" prefWidth="25.0" />
@@ -160,7 +160,7 @@
                         <Button fx:id="buttonPlayer78" mnemonicParsing="false" prefWidth="25.0" GridPane.columnIndex="7" GridPane.rowIndex="8" />
                      </children>
                   </GridPane>
-                  <GridPane fx:id="iaGrid" gridLinesVisible="true">
+                  <GridPane fx:id="iaGrid">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="25.0" prefWidth="25.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="25.0" prefWidth="25.0" />
