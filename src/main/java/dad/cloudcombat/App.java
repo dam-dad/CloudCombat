@@ -3,6 +3,7 @@ package dad.cloudcombat;
 import dad.cloudcombat.ui.MainController;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -20,9 +21,6 @@ public class App extends Application {
 		stage = primaryStage;
 		mainController = new MainController();
 
-		// Font.loadFont(getClass().getResourceAsStream("/assets/PressStart2P-Regular.ttf"),
-		// 12);
-
 		primaryStage.setTitle("CloudCombat");
 
 		Scene scene = new Scene(mainController.getView());
@@ -30,6 +28,8 @@ public class App extends Application {
 
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/assets/planes/icon.jpg")));
+
 		primaryStage.show();
 	}
 
