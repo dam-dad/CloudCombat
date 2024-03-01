@@ -88,6 +88,14 @@ public class GameController implements Initializable {
 		List<Integer> indices = new ArrayList<>();
 		for (int i = 0; i < 100; i++) {
 			indices.add(i);
+			int indiceBoton = indices.get(i);
+			String buttonId = "buttonPlayer" + String.format("%02d", indiceBoton);
+			Button button = (Button) view.lookup("#" + buttonId);
+			button.setOnAction(event -> {
+				button.setStyle("-fx-background-color: blue;");
+
+			});
+
 		}
 		Collections.shuffle(indices);
 
@@ -120,6 +128,14 @@ public class GameController implements Initializable {
 		List<Integer> indices = new ArrayList<>();
 		for (int i = 0; i < 100; i++) {
 			indices.add(i);
+			int indiceBoton = indices.get(i);
+			String buttonId = "buttonIA" + String.format("%02d", indiceBoton);
+			Button button = (Button) view.lookup("#" + buttonId);
+			button.setOnAction(event -> {
+				button.setStyle("-fx-background-color: blue;");
+
+			});
+
 		}
 		Collections.shuffle(indices);
 
@@ -135,20 +151,19 @@ public class GameController implements Initializable {
 
 			String buttonId = "buttonIA" + String.format("%02d", indiceBoton);
 			Button button = (Button) view.lookup("#" + buttonId);
-			
+
 			button.setMinSize(25, 25);
 			button.setMaxSize(25, 25);
 
 			button.setGraphic(imageView);
-
+			button.setOpacity(0.0);
 			button.setOnAction(event -> {
 
-				button.setStyle("-fx-background-color: red;");
+				button.setStyle("-fx-background-color: green;");
 				button.setOpacity(1.0);
 
 			});
 
-			button.setOpacity(0.0);
 		}
 	}
 
