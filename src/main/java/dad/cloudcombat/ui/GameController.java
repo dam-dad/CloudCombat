@@ -9,13 +9,14 @@ import java.util.Random;
 import java.util.ResourceBundle;
 
 import dad.cloudcombat.engine.Game;
+import dad.cloudcombat.engine.IA;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
@@ -81,6 +82,13 @@ public class GameController implements Initializable {
 		cargarImagenes();
 		asignarImagenAleatoriaPlayer();
 		asignarImagenAleatoriaIA();
+		
+		 for (Node node : iaGrid.getChildren()) {
+		        if (node instanceof Button) {
+		            Button button = (Button) node;
+		            button.setOnAction(this::onIAButtonClicked);
+		        }
+		    }
 
 	}
 
@@ -95,6 +103,7 @@ public class GameController implements Initializable {
 			button.setOpacity(0.2);
 			button.setOnAction(event -> {
 				button.setStyle("-fx-background-color: blue;");
+				
 
 			});
 
@@ -188,7 +197,24 @@ public class GameController implements Initializable {
 		}
 
 	}
+    
+	
+	@FXML
+    void onIAButtonClicked(ActionEvent event) {
+		Button clickedButton = (Button) event.getSource();
 
+	    // Verificar si el botón tiene una imagen de avión
+	    if (clickedButton.getGraphic() != null) {
+	        clickedButton.setStyle("-fx-background-color: lightgreen;");
+	        clickedButton.setOpacity(1.0); // Asegurar que el botón sea visible
+	    } else {
+	        clickedButton.setStyle("-fx-background-color: blue;");
+	    }
+
+	    // Llamar a la IA para seleccionar y hacer clic en un botón aleatorio en el playerGrid
+	    IA.selectAndClickRandomButton(playerGrid);
+	}
+	
 	@FXML
 	void onAceptar(ActionEvent event) {
 		view2.setVisible(false);
