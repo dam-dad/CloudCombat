@@ -2,15 +2,24 @@ package dad.cloudcombat.ui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import dad.cloudcombat.engine.Game;
 import dad.cloudcombat.engine.IA;
 import dad.cloudcombat.engine.Music;
+import dad.cloudcombat.engine.Score;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -18,8 +27,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -32,29 +43,37 @@ public class GameController implements Initializable {
 	private EventHandler<ActionEvent> onBack;
 
 	private Game game;
+	private Score scoreManager;
 
 	private static Music explosion = new Music("/assets/FX/explosion.aiff");
-	
+
 	private List<Image> imageListPlayer;
 	private List<Image> imageListIA;
+
+	private int score = 0;
+	private int buttonsWithPlane = 12; // Número total de botones en el iaGrid que contienen un avión
+	private int buttonsClickedWithPlane = 0; // Contador de botones pulsados en el iaGrid que contienen un avión
+
+	@FXML
+	private Label scoreLabel;
 
 	@FXML
 	private StackPane view;
 
 	@FXML
-	private TableColumn<?, ?> playerColumn;
+	private TableColumn<Score.ScoreData, String> playerColumn;
 
 	@FXML
-	private TableColumn<?, ?> rankColumn;
+	private TableColumn<Score.ScoreData, Integer> rankColumn;
 
 	@FXML
-	private TableColumn<?, ?> scoreColumn;
+	private TableColumn<Score.ScoreData, Integer> scoreColumn;
 
 	@FXML
 	private BorderPane view2;
 
 	@FXML
-	private TableView<?> scoreTable;
+	private TableView<Score.ScoreData> scoreTable;
 
 	public GameController() {
 		try {
@@ -85,20 +104,44 @@ public class GameController implements Initializable {
 		cargarImagenes();
 		asignarImagenAleatoriaPlayer();
 		asignarImagenAleatoriaIA();
-		
-		 for (Node node : iaGrid.getChildren()) {
-		        if (node instanceof Button) {
-		            Button button = (Button) node;
-		            button.setOnAction(this::onIAButtonClicked);
-		        }
-		    }
 
+		for (Node node : iaGrid.getChildren()) {
+			if (node instanceof Button) {
+				Button button = (Button) node;
+				button.setOnAction(this::onIAButtonClicked);
+			}
+		}
+
+		updateScoreLabel();
+		
+		 scoreManager = new Score("scores.json");
+
+	        // Configurar las celdas de la tabla
+	        playerColumn.setCellValueFactory(new PropertyValueFactory<>("player"));
+	        scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
+
+	        // Obtener datos de puntuación y mostrar en la tabla
+	        List<Score.ScoreData> scores = scoreManager.readScores();
+	        List<Score.ScoreData> topFiveScores = scores.subList(0, Math.min(scores.size(), 5)); // Obtener los primeros 5 puntajes o menos
+	        ObservableList<Score.ScoreData> scoreData = FXCollections.observableArrayList(topFiveScores);
+	        scoreTable.setItems(scoreData);
+	        
+	        rankColumn.setCellValueFactory(cellData -> {
+	            // Obtener el índice de la fila actual
+	            int index = cellData.getTableView().getItems().indexOf(cellData.getValue());
+	            if (index >= 0 && index < 5) {
+	                // Asignar manualmente los números 1, 2, 3, 4 y 5 a las primeras 5 filas
+	                return new SimpleIntegerProperty(index + 1).asObject();
+	            } else {
+	                return null; // Para las filas restantes, dejar el valor en blanco
+	            }
+	        });
 	}
 
 	private void asignarImagenAleatoriaPlayer() {
 		List<Integer> indices = new ArrayList<>();
 		for (int i = 0; i < 100; i++) {
-			
+
 			indices.add(i);
 			int indiceBoton = indices.get(i);
 			String buttonId = "buttonPlayer" + String.format("%02d", indiceBoton);
@@ -106,7 +149,7 @@ public class GameController implements Initializable {
 			button.setOpacity(0.2);
 			button.setOnAction(event -> {
 				button.setStyle("-fx-background-color: blue;");
-				
+
 			});
 
 		}
@@ -130,11 +173,12 @@ public class GameController implements Initializable {
 
 			button.setGraphic(imageView);
 			button.setOpacity(1.0);
-			
 
 			button.setOnAction(event -> {
 				button.setStyle("-fx-background-color: #f15361;");
 				explosion.playSound("/assets/FX/explosion.aiff");
+				score = score-5;
+				updateScoreLabel();
 			});
 		}
 	}
@@ -176,8 +220,6 @@ public class GameController implements Initializable {
 			button.setOnAction(event -> {
 				button.setStyle("-fx-background-color: lightgreen;");
 				button.setOpacity(1.0);
-				
-
 
 			});
 
@@ -200,25 +242,64 @@ public class GameController implements Initializable {
 		}
 
 	}
-    
-	
+
 	@FXML
-    void onIAButtonClicked(ActionEvent event) {
+	void onIAButtonClicked(ActionEvent event) {
 		Button clickedButton = (Button) event.getSource();
 
-	    // Verificar si el botón tiene una imagen de avión
-	    if (clickedButton.getGraphic() != null) {
-	        clickedButton.setStyle("-fx-background-color: lightgreen;");
-	        explosion.playSound("/assets/FX/explosion.aiff");
-	        clickedButton.setOpacity(1.0); // Asegurar que el botón sea visible
-	    } else {
-	        clickedButton.setStyle("-fx-background-color: blue;");
-	    }
+		// Verificar si el botón tiene una imagen de avión
+		if (clickedButton.getGraphic() != null) {
+			clickedButton.setStyle("-fx-background-color: lightgreen;");
+			explosion.playSound("/assets/FX/explosion.aiff");
+			clickedButton.setOpacity(1.0); // Asegurar que el botón sea visible
 
-	    // Llamar a la IA para seleccionar y hacer clic en un botón aleatorio en el playerGrid
-	    IA.selectAndClickRandomButton(playerGrid);
+			if (playerGrid.getChildren().contains(clickedButton)) {
+				// Restar un punto si la IA pulsa un botón en el playerGrid donde hay un avión
+				score--;
+				updateScoreLabel(); // Actualizar el texto del Label
+			} else {
+				// Aumentar la puntuación si la IA pulsa un botón en el iaGrid donde hay un
+				// avión
+				score = score + 10;
+				updateScoreLabel(); // Actualizar el texto del Label
+			}
+			
+			if (clickedButton.getGraphic() != null) {
+	            // Decrementar el número de botones restantes con avión en el iaGrid
+	            buttonsWithPlane--;
+	            if (buttonsWithPlane == 0) {
+	                // Todos los botones del iaGrid con avión han sido pulsados
+	                scoreLabel.setText("¡HAS GANADO! Score: " + score);
+	                view2.setVisible(true);
+	                
+	                // Guardar el puntaje en el archivo JSON
+	                Score scoreManager = new Score("scores.json");
+	                scoreManager.insertScore("PLAYER1", score);
+	                
+	                // Actualizar la tabla
+	                updateScoreTable(scoreManager);
+	            }
+	        }
+
+		} else {
+			clickedButton.setStyle("-fx-background-color: blue;");
+		}
+
+		// Llamar a la IA para seleccionar y hacer clic en un botón aleatorio en el
+		// playerGrid
+		IA.selectAndClickRandomButton(playerGrid);
 	}
 	
+	private void updateScoreTable(Score scoreManager) {
+	    List<Score.ScoreData> scores = scoreManager.readScores();
+	    ObservableList<Score.ScoreData> scoreDataList = FXCollections.observableArrayList(scores);
+	    scoreTable.setItems(scoreDataList);
+	}
+
+	private void updateScoreLabel() {
+		scoreLabel.setText("SCORE: " + score);
+	}
+
 	@FXML
 	void onAceptar(ActionEvent event) {
 		view2.setVisible(false);

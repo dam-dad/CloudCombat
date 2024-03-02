@@ -1,26 +1,26 @@
 [
     {
-        "Player": "Jugador1",
-        "Score": 100
-    },
-    {
-        "Player": "Jugador2",
-        "Score": 150
-    },
-    {
         "Player": "Jugador3",
         "Score": 200
     },
     {
-        "Player": "Jugador1",
-        "Score": 100
+        "Player": "PLAYER1",
+        "Score": 70
     },
     {
-        "Player": "Jugador2",
-        "Score": 150
+        "Player": "PLAYER1",
+        "Score": 55
     },
     {
-        "Player": "Jugador3",
-        "Score": 200
+        "Player": "PLAYER1",
+        "Score": 40
+    },
+    {
+        "Player": "PLAYER1",
+        "Score": 35
+    },
+    {
+        "Player": "PLAYER1",
+        "Score": 30
     }
 ]
