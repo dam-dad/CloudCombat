@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 
 import dad.cloudcombat.engine.Game;
 import dad.cloudcombat.engine.IA;
+import dad.cloudcombat.engine.Music;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -32,6 +33,8 @@ public class GameController implements Initializable {
 
 	private Game game;
 
+	private static Music explosion = new Music("/assets/FX/explosion.aiff");
+	
 	private List<Image> imageListPlayer;
 	private List<Image> imageListIA;
 
@@ -104,7 +107,6 @@ public class GameController implements Initializable {
 			button.setOnAction(event -> {
 				button.setStyle("-fx-background-color: blue;");
 				
-
 			});
 
 		}
@@ -132,7 +134,7 @@ public class GameController implements Initializable {
 
 			button.setOnAction(event -> {
 				button.setStyle("-fx-background-color: #f15361;");
-
+				explosion.playSound("/assets/FX/explosion.aiff");
 			});
 		}
 	}
@@ -172,9 +174,10 @@ public class GameController implements Initializable {
 			button.setGraphic(imageView);
 			button.setOpacity(0.0);
 			button.setOnAction(event -> {
-
 				button.setStyle("-fx-background-color: lightgreen;");
 				button.setOpacity(1.0);
+				
+
 
 			});
 
@@ -206,6 +209,7 @@ public class GameController implements Initializable {
 	    // Verificar si el botón tiene una imagen de avión
 	    if (clickedButton.getGraphic() != null) {
 	        clickedButton.setStyle("-fx-background-color: lightgreen;");
+	        explosion.playSound("/assets/FX/explosion.aiff");
 	        clickedButton.setOpacity(1.0); // Asegurar que el botón sea visible
 	    } else {
 	        clickedButton.setStyle("-fx-background-color: blue;");

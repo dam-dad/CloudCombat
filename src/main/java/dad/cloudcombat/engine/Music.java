@@ -1,5 +1,7 @@
 package dad.cloudcombat.engine;
 
+import java.io.File;
+
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -55,6 +57,12 @@ public class Music {
 
     public void setPlayOnSelect(boolean playOnSelect) {
         this.playOnSelect = playOnSelect;
+    }
+    
+    public void playSound(String soundFile) {
+        Media sound = new Media(getClass().getResource(soundFile).toString());
+        MediaPlayer soundPlayer = new MediaPlayer(sound);
+        soundPlayer.play();
     }
     
 }
