@@ -2,7 +2,7 @@
 
 CloudCombat es un juego inspirado en el clásico "Hundir la Flota" y "Buscaminas". En este juego, los jugadores se adentran en el mundo de la aviación, donde el objetivo es derribar los aviones enemigos mientras protegen sus propias fuerzas aéreas.
 
-![](C:\Users\david\AppData\Roaming\marktext\images\2024-03-04-21-29-55-image.png)
+![Texto alternativo](docs/captura.PNG)
 
 ## Requerimientos
 
