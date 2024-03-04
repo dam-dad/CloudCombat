@@ -295,6 +295,8 @@
             </HBox>
             <HBox alignment="BASELINE_RIGHT" spacing="5.0">
                <children>
+                  <Button mnemonicParsing="false" onAction="#onResetGame" styleClass="botones" text="RESET GAME" />
+                  <Button mnemonicParsing="false" onAction="#onStartGame" styleClass="botones" text="START GAME" />
                   <Button mnemonicParsing="false" onAction="#onShowScores" styleClass="botones" text="SCORES" />
                   <Button fx:id="backButton" mnemonicParsing="false" onAction="#onGoingBackToMenuAction" styleClass="botones" text="GO BACK" />
                </children>

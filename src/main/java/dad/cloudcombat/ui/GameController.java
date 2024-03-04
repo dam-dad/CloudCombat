@@ -53,7 +53,7 @@ public class GameController implements Initializable {
 	private int score = 0;
 	private int buttonsWithPlane = 12; // Número total de botones en el iaGrid que contienen un avión
 	private int buttonsClickedWithPlane = 0; // Contador de botones pulsados en el iaGrid que contienen un avión
-
+	private int buttonsClickedbyIA = 12;
 	@FXML
 	private Label scoreLabel;
 
@@ -101,41 +101,6 @@ public class GameController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		cargarImagenes();
-		asignarImagenAleatoriaPlayer();
-		asignarImagenAleatoriaIA();
-
-		for (Node node : iaGrid.getChildren()) {
-			if (node instanceof Button) {
-				Button button = (Button) node;
-				button.setOnAction(this::onIAButtonClicked);
-			}
-		}
-
-		updateScoreLabel();
-		
-		 scoreManager = new Score("scores.json");
-
-	        // Configurar las celdas de la tabla
-	        playerColumn.setCellValueFactory(new PropertyValueFactory<>("player"));
-	        scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
-
-	        // Obtener datos de puntuación y mostrar en la tabla
-	        List<Score.ScoreData> scores = scoreManager.readScores();
-	        List<Score.ScoreData> topFiveScores = scores.subList(0, Math.min(scores.size(), 5)); // Obtener los primeros 5 puntajes o menos
-	        ObservableList<Score.ScoreData> scoreData = FXCollections.observableArrayList(topFiveScores);
-	        scoreTable.setItems(scoreData);
-	        
-	        rankColumn.setCellValueFactory(cellData -> {
-	            // Obtener el índice de la fila actual
-	            int index = cellData.getTableView().getItems().indexOf(cellData.getValue());
-	            if (index >= 0 && index < 5) {
-	                // Asignar manualmente los números 1, 2, 3, 4 y 5 a las primeras 5 filas
-	                return new SimpleIntegerProperty(index + 1).asObject();
-	            } else {
-	                return null; // Para las filas restantes, dejar el valor en blanco
-	            }
-	        });
 	}
 
 	private void asignarImagenAleatoriaPlayer() {
@@ -175,10 +140,21 @@ public class GameController implements Initializable {
 			button.setOpacity(1.0);
 
 			button.setOnAction(event -> {
+				button.setDisable(true);
 				button.setStyle("-fx-background-color: #f15361;");
 				explosion.playSound("/assets/FX/explosion.aiff");
-				score = score-5;
+				score = score - 10;
 				updateScoreLabel();
+
+				buttonsClickedbyIA--;
+
+				// Verificar si la IA ha pulsado los 12 botones con avión
+				if (buttonsClickedbyIA == 0) {
+					scoreLabel.setText("¡Has perdido! Score: " + score);
+					// Aquí puedes agregar cualquier otra acción que desees realizar al perder el
+					// juego
+				}
+
 			});
 		}
 	}
@@ -247,8 +223,8 @@ public class GameController implements Initializable {
 	void onIAButtonClicked(ActionEvent event) {
 		Button clickedButton = (Button) event.getSource();
 
-		// Verificar si el botón tiene una imagen de avión
-		if (clickedButton.getGraphic() != null) {
+		// Verificar si el botón no está deshabilitado y tiene una imagen de avión
+		if (!clickedButton.isDisabled() && clickedButton.getGraphic() != null) {
 			clickedButton.setStyle("-fx-background-color: lightgreen;");
 			explosion.playSound("/assets/FX/explosion.aiff");
 			clickedButton.setOpacity(1.0); // Asegurar que el botón sea visible
@@ -263,24 +239,26 @@ public class GameController implements Initializable {
 				score = score + 10;
 				updateScoreLabel(); // Actualizar el texto del Label
 			}
-			
-			if (clickedButton.getGraphic() != null) {
-	            // Decrementar el número de botones restantes con avión en el iaGrid
-	            buttonsWithPlane--;
-	            if (buttonsWithPlane == 0) {
-	                // Todos los botones del iaGrid con avión han sido pulsados
-	                scoreLabel.setText("¡HAS GANADO! Score: " + score);
-	                view2.setVisible(true);
-	                
-	                // Guardar el puntaje en el archivo JSON
-	                Score scoreManager = new Score("scores.json");
-	                scoreManager.insertScore("PLAYER1", score);
-	                
-	                // Actualizar la tabla
-	                updateScoreTable(scoreManager);
-	            }
-	        }
 
+			// Deshabilitar el botón para evitar que se pueda pulsar más de una vez
+			clickedButton.setDisable(true);
+
+			if (clickedButton.getGraphic() != null) {
+				// Decrementar el número de botones restantes con avión en el iaGrid
+				buttonsWithPlane--;
+				if (buttonsWithPlane == 0) {
+					// Todos los botones del iaGrid con avión han sido pulsados
+					scoreLabel.setText("¡HAS GANADO! Score: " + score);
+					view2.setVisible(true);
+
+					// Guardar el puntaje en el archivo JSON
+					Score scoreManager = new Score("scores.json");
+					scoreManager.insertScore("PLAYER1", score);
+
+					// Actualizar la tabla
+					updateScoreTable(scoreManager);
+				}
+			}
 		} else {
 			clickedButton.setStyle("-fx-background-color: blue;");
 		}
@@ -289,11 +267,11 @@ public class GameController implements Initializable {
 		// playerGrid
 		IA.selectAndClickRandomButton(playerGrid);
 	}
-	
+
 	private void updateScoreTable(Score scoreManager) {
-	    List<Score.ScoreData> scores = scoreManager.readScores();
-	    ObservableList<Score.ScoreData> scoreDataList = FXCollections.observableArrayList(scores);
-	    scoreTable.setItems(scoreDataList);
+		List<Score.ScoreData> scores = scoreManager.readScores();
+		ObservableList<Score.ScoreData> scoreDataList = FXCollections.observableArrayList(scores);
+		scoreTable.setItems(scoreDataList);
 	}
 
 	private void updateScoreLabel() {
@@ -308,6 +286,68 @@ public class GameController implements Initializable {
 	@FXML
 	void onShowScores(ActionEvent event) {
 		view2.setVisible(true);
+	}
+
+	@FXML
+	void onStartGame(ActionEvent event) {
+
+		cargarImagenes();
+		asignarImagenAleatoriaPlayer();
+		asignarImagenAleatoriaIA();
+
+		for (Node node : iaGrid.getChildren()) {
+			if (node instanceof Button) {
+				Button button = (Button) node;
+				button.setOnAction(this::onIAButtonClicked);
+			}
+		}
+
+		updateScoreLabel();
+
+		scoreManager = new Score("scores.json");
+
+		// Configurar las celdas de la tabla
+		playerColumn.setCellValueFactory(new PropertyValueFactory<>("player"));
+		scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
+
+		// Obtener datos de puntuación y mostrar en la tabla
+		List<Score.ScoreData> scores = scoreManager.readScores();
+		List<Score.ScoreData> topFiveScores = scores.subList(0, Math.min(scores.size(), 5)); // Obtener los primeros 5
+																								// puntajes o menos
+		ObservableList<Score.ScoreData> scoreData = FXCollections.observableArrayList(topFiveScores);
+		scoreTable.setItems(scoreData);
+
+		rankColumn.setCellValueFactory(cellData -> {
+			// Obtener el índice de la fila actual
+			int index = cellData.getTableView().getItems().indexOf(cellData.getValue());
+			if (index >= 0 && index < 5) {
+				// Asignar manualmente los números 1, 2, 3, 4 y 5 a las primeras 5 filas
+				return new SimpleIntegerProperty(index + 1).asObject();
+			} else {
+				return null; // Para las filas restantes, dejar el valor en blanco
+			}
+		});
+	}
+
+	@FXML
+	void onResetGame(ActionEvent event) {
+		 // Reiniciar todos los valores y el estado del juego aquí
+	    score = 0;
+	    scoreLabel.setText("SCORE: " + score);
+
+	    // Reiniciar el número total de botones con avión y el número de botones pulsados por la IA
+	    buttonsWithPlane = 12;
+	    buttonsClickedbyIA = 12;
+
+	    // Limpiar todas las imágenes de los botones y habilitarlos
+	    for (Node node : iaGrid.getChildren()) {
+	        if (node instanceof Button) {
+	            Button button = (Button) node;
+	            button.setDisable(false);
+	            button.setOpacity(0.2);
+	            button.setGraphic(null); // Eliminar la imagen del botón
+	        }
+	    }
 	}
 
 	@FXML
