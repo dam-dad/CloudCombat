@@ -72,7 +72,7 @@
 							<platform>windows</platform>
 							<createZipball>true</createZipball>
 							<winConfig>
-								<!--<icoFile></icoFile> -->
+								
 								<generateSetup>true</generateSetup>
 								<generateMsi>false</generateMsi>
 							</winConfig>
