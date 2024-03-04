@@ -331,25 +331,40 @@ public class GameController implements Initializable {
 
 	@FXML
 	void onResetGame(ActionEvent event) {
-		 // Reiniciar todos los valores y el estado del juego aquí
 	    score = 0;
 	    scoreLabel.setText("SCORE: " + score);
 
 	    // Reiniciar el número total de botones con avión y el número de botones pulsados por la IA
 	    buttonsWithPlane = 12;
 	    buttonsClickedbyIA = 12;
+	    
+	    asignarImagenAleatoriaPlayer();
+	    asignarImagenAleatoriaIA();
 
-	    // Limpiar todas las imágenes de los botones y habilitarlos
+	    // Limpiar todas las imágenes de los botones y habilitarlos en iaGrid
 	    for (Node node : iaGrid.getChildren()) {
 	        if (node instanceof Button) {
 	            Button button = (Button) node;
 	            button.setDisable(false);
 	            button.setOpacity(0.2);
+	            button.setStyle("-fx-background-color: transparent;");
 	            button.setGraphic(null); // Eliminar la imagen del botón
 	        }
 	    }
-	}
 
+	    // Limpiar todas las imágenes de los botones en playerGrid
+	    for (Node node : playerGrid.getChildren()) {
+	        if (node instanceof Button) {
+	            Button button = (Button) node;
+	            button.setGraphic(null); // Eliminar la imagen del botón
+	            button.setStyle("-fx-background-color: transparent;");
+	        }
+	    }
+	    
+	    // Llamar a la IA para seleccionar y hacer clic en un botón aleatorio en el playerGrid
+	    IA.selectAndClickRandomButton(playerGrid);
+	}
+	
 	@FXML
 	private Button backButton;
 

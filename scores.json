@@ -5,6 +5,10 @@
     },
     {
         "Player": "PLAYER1",
+        "Score": 90
+    },
+    {
+        "Player": "PLAYER1",
         "Score": 70
     },
     {
@@ -22,5 +26,25 @@
     {
         "Player": "PLAYER1",
         "Score": 30
+    },
+    {
+        "Player": "PLAYER1",
+        "Score": 30
+    },
+    {
+        "Player": "PLAYER1",
+        "Score": 20
+    },
+    {
+        "Player": "PLAYER1",
+        "Score": 20
+    },
+    {
+        "Player": "PLAYER1",
+        "Score": 10
+    },
+    {
+        "Player": "PLAYER1",
+        "Score": 10
     }
 ]
