@@ -1,19 +1,15 @@
 package dad.cloudcombat.ui;
-
+/**
+ * @author David
+ */
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import dad.cloudcombat.engine.Game;
 import dad.cloudcombat.engine.IA;
 import dad.cloudcombat.engine.Music;
 import dad.cloudcombat.engine.Score;
@@ -42,7 +38,6 @@ public class GameController implements Initializable {
 
 	private EventHandler<ActionEvent> onBack;
 
-	private Game game;
 	private Score scoreManager;
 
 	private static Music explosion = new Music("/assets/FX/explosion.aiff");
@@ -51,9 +46,9 @@ public class GameController implements Initializable {
 	private List<Image> imageListIA;
 
 	private int score = 0;
-	private int buttonsWithPlane = 12; // Número total de botones en el iaGrid que contienen un avión
-	private int buttonsClickedWithPlane = 0; // Contador de botones pulsados en el iaGrid que contienen un avión
+	private int buttonsClickedByPlayer = 12;
 	private int buttonsClickedbyIA = 12;
+
 	@FXML
 	private Label scoreLabel;
 
@@ -75,6 +70,9 @@ public class GameController implements Initializable {
 	@FXML
 	private TableView<Score.ScoreData> scoreTable;
 
+	/**
+	 * Constructor
+	 */
 	public GameController() {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/GameView.fxml"));
@@ -103,6 +101,11 @@ public class GameController implements Initializable {
 
 	}
 
+	/**
+	 * Función que asigna imágenes aleatorias en casillas aleatorias en el tablero
+	 * del jugador. Tiene el evento on click para cambiar de color las casillas que
+	 * son presionadas y el fx de la explosión
+	 */
 	private void asignarImagenAleatoriaPlayer() {
 		List<Integer> indices = new ArrayList<>();
 		for (int i = 0; i < 100; i++) {
@@ -148,17 +151,20 @@ public class GameController implements Initializable {
 
 				buttonsClickedbyIA--;
 
-				// Verificar si la IA ha pulsado los 12 botones con avión
 				if (buttonsClickedbyIA == 0) {
 					scoreLabel.setText("¡Has perdido! Score: " + score);
-					// Aquí puedes agregar cualquier otra acción que desees realizar al perder el
-					// juego
+
 				}
 
 			});
 		}
 	}
 
+	/**
+	 * Función que asigna imágenes aleatorias en casillas aleatorias en el tablero
+	 * de la IA. Tiene el evento on click para cambiar de color las casillas que son
+	 * presionadas y el fx de la explosión
+	 */
 	private void asignarImagenAleatoriaIA() {
 		List<Integer> indices = new ArrayList<>();
 		for (int i = 0; i < 100; i++) {
@@ -202,6 +208,9 @@ public class GameController implements Initializable {
 		}
 	}
 
+	/**
+	 * Carga las imagenes de los dos tablerosss
+	 */
 	private void cargarImagenes() {
 
 		imageListPlayer = new ArrayList<>();
@@ -223,31 +232,24 @@ public class GameController implements Initializable {
 	void onIAButtonClicked(ActionEvent event) {
 		Button clickedButton = (Button) event.getSource();
 
-		// Verificar si el botón no está deshabilitado y tiene una imagen de avión
 		if (!clickedButton.isDisabled() && clickedButton.getGraphic() != null) {
 			clickedButton.setStyle("-fx-background-color: lightgreen;");
 			explosion.playSound("/assets/FX/explosion.aiff");
-			clickedButton.setOpacity(1.0); // Asegurar que el botón sea visible
+			clickedButton.setOpacity(1.0);
 
 			if (playerGrid.getChildren().contains(clickedButton)) {
-				// Restar un punto si la IA pulsa un botón en el playerGrid donde hay un avión
 				score--;
-				updateScoreLabel(); // Actualizar el texto del Label
+				updateScoreLabel();
 			} else {
-				// Aumentar la puntuación si la IA pulsa un botón en el iaGrid donde hay un
-				// avión
 				score = score + 10;
-				updateScoreLabel(); // Actualizar el texto del Label
+				updateScoreLabel();
 			}
 
-			// Deshabilitar el botón para evitar que se pueda pulsar más de una vez
 			clickedButton.setDisable(true);
 
 			if (clickedButton.getGraphic() != null) {
-				// Decrementar el número de botones restantes con avión en el iaGrid
-				buttonsWithPlane--;
-				if (buttonsWithPlane == 0) {
-					// Todos los botones del iaGrid con avión han sido pulsados
+				buttonsClickedByPlayer--;
+				if (buttonsClickedByPlayer == 0) {
 					scoreLabel.setText("¡HAS GANADO! Score: " + score);
 					view2.setVisible(true);
 
@@ -255,7 +257,6 @@ public class GameController implements Initializable {
 					Score scoreManager = new Score("scores.json");
 					scoreManager.insertScore("PLAYER1", score);
 
-					// Actualizar la tabla
 					updateScoreTable(scoreManager);
 				}
 			}
@@ -263,31 +264,51 @@ public class GameController implements Initializable {
 			clickedButton.setStyle("-fx-background-color: blue;");
 		}
 
-		// Llamar a la IA para seleccionar y hacer clic en un botón aleatorio en el
-		// playerGrid
 		IA.selectAndClickRandomButton(playerGrid);
 	}
 
+	/**
+	 * carga sobre la tabla el score obtenido
+	 * 
+	 * @param scoreManager recibe la puntuacion del scoreLabel
+	 */
 	private void updateScoreTable(Score scoreManager) {
 		List<Score.ScoreData> scores = scoreManager.readScores();
 		ObservableList<Score.ScoreData> scoreDataList = FXCollections.observableArrayList(scores);
 		scoreTable.setItems(scoreDataList);
 	}
 
+	/**
+	 * Actualiza el score
+	 */
 	private void updateScoreLabel() {
 		scoreLabel.setText("SCORE: " + score);
 	}
 
+	/**
+	 * Cuando aceptas la ventana de puntuaciones desactivas la visibilidad para
+	 * volver al juego
+	 * 
+	 */
 	@FXML
 	void onAceptar(ActionEvent event) {
 		view2.setVisible(false);
 	}
 
+	/**
+	 * 
+	 * Muestra la pantalla de las puntuaciones
+	 */
 	@FXML
 	void onShowScores(ActionEvent event) {
 		view2.setVisible(true);
 	}
 
+	/**
+	 * 
+	 * boton en el que se incluye el initialize, carga las imagenes, los valores en
+	 * la tabla, etc
+	 */
 	@FXML
 	void onStartGame(ActionEvent event) {
 
@@ -310,61 +331,58 @@ public class GameController implements Initializable {
 		playerColumn.setCellValueFactory(new PropertyValueFactory<>("player"));
 		scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
 
-		// Obtener datos de puntuación y mostrar en la tabla
 		List<Score.ScoreData> scores = scoreManager.readScores();
-		List<Score.ScoreData> topFiveScores = scores.subList(0, Math.min(scores.size(), 5)); // Obtener los primeros 5
-																								// puntajes o menos
+		List<Score.ScoreData> topFiveScores = scores.subList(0, Math.min(scores.size(), 5));
 		ObservableList<Score.ScoreData> scoreData = FXCollections.observableArrayList(topFiveScores);
 		scoreTable.setItems(scoreData);
 
 		rankColumn.setCellValueFactory(cellData -> {
-			// Obtener el índice de la fila actual
 			int index = cellData.getTableView().getItems().indexOf(cellData.getValue());
 			if (index >= 0 && index < 5) {
-				// Asignar manualmente los números 1, 2, 3, 4 y 5 a las primeras 5 filas
 				return new SimpleIntegerProperty(index + 1).asObject();
 			} else {
-				return null; // Para las filas restantes, dejar el valor en blanco
+				return null;
 			}
 		});
 	}
 
+	/**
+	 * Resetea el GameView al principio para volver a jugar
+	 */
 	@FXML
 	void onResetGame(ActionEvent event) {
-	    score = 0;
-	    scoreLabel.setText("SCORE: " + score);
+		score = 0;
+		scoreLabel.setText("SCORE: " + score);
 
-	    // Reiniciar el número total de botones con avión y el número de botones pulsados por la IA
-	    buttonsWithPlane = 12;
-	    buttonsClickedbyIA = 12;
-	    
-	    asignarImagenAleatoriaPlayer();
-	    asignarImagenAleatoriaIA();
+		buttonsClickedByPlayer = 12;
+		buttonsClickedbyIA = 12;
 
-	    // Limpiar todas las imágenes de los botones y habilitarlos en iaGrid
-	    for (Node node : iaGrid.getChildren()) {
-	        if (node instanceof Button) {
-	            Button button = (Button) node;
-	            button.setDisable(false);
-	            button.setOpacity(0.2);
-	            button.setStyle("-fx-background-color: transparent;");
-	            button.setGraphic(null); // Eliminar la imagen del botón
-	        }
-	    }
+		asignarImagenAleatoriaPlayer();
+		asignarImagenAleatoriaIA();
 
-	    // Limpiar todas las imágenes de los botones en playerGrid
-	    for (Node node : playerGrid.getChildren()) {
-	        if (node instanceof Button) {
-	            Button button = (Button) node;
-	            button.setGraphic(null); // Eliminar la imagen del botón
-	            button.setStyle("-fx-background-color: transparent;");
-	        }
-	    }
-	    
-	    // Llamar a la IA para seleccionar y hacer clic en un botón aleatorio en el playerGrid
-	    IA.selectAndClickRandomButton(playerGrid);
+		// Limpiar todas las imágenes de los botones y habilitarlos en iaGrid
+		for (Node node : iaGrid.getChildren()) {
+			if (node instanceof Button) {
+				Button button = (Button) node;
+				button.setDisable(false);
+				button.setOpacity(0.2);
+				button.setStyle("-fx-background-color: transparent;");
+				button.setGraphic(null); // Eliminar la imagen del botón
+			}
+		}
+
+		// Limpiar todas las imágenes de los botones en playerGrid
+		for (Node node : playerGrid.getChildren()) {
+			if (node instanceof Button) {
+				Button button = (Button) node;
+				button.setGraphic(null);
+				button.setStyle("-fx-background-color: transparent;");
+			}
+		}
+
+		IA.selectAndClickRandomButton(playerGrid);
 	}
-	
+
 	@FXML
 	private Button backButton;
 

@@ -1,5 +1,7 @@
 package dad.cloudcombat.ui;
-
+/**
+ * @author David
+ */
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;

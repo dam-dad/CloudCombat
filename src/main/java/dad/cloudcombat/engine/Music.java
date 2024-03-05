@@ -1,5 +1,7 @@
 package dad.cloudcombat.engine;
-
+/**
+ * @author David 
+ */
 import java.io.File;
 
 import javafx.scene.media.Media;
@@ -40,7 +42,10 @@ public class Music {
     public boolean isPlaying() {
         return mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING;
     }
-    
+    /**
+     * función que cambia la canción
+     * @param musicFile canción que recibe
+     */
     public void changeSong(String musicFile) {
         mediaPlayer.stop();
         mediaPlayer = new MediaPlayer(new Media(getClass().getResource(musicFile).toString()));
@@ -59,6 +64,10 @@ public class Music {
         this.playOnSelect = playOnSelect;
     }
     
+    /**
+     * función que reproduce el efecto de sonido
+     * @param soundFile efecto de sonido
+     */
     public void playSound(String soundFile) {
         Media sound = new Media(getClass().getResource(soundFile).toString());
         MediaPlayer soundPlayer = new MediaPlayer(sound);
